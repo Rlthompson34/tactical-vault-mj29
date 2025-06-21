@@ -1,0 +1,64 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tactical Vault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: sans-serif; padding: 20px; background: #111; color: #eee; }
+        h1 { text-align: center; }
+        input { width: 100%; padding: 10px; margin-bottom: 20px; font-size: 16px; }
+        .card { background: #222; padding: 15px; margin: 10px 0; border-radius: 10px; }
+        .card h2 { margin: 0 0 5px; }
+        .card p { margin: 3px 0; }
+        a { color: #6cf; }
+    </style>
+</head>
+<body>
+    <h1>Tactical Vault</h1>
+    <input type="text" id="search" placeholder="Search by team, coach, tactic...">
+
+    <div id="results"></div>
+
+    <script>
+        const data = [{"Team": "Spain", "Coach": "Vicente del Bosque", "Year": 2010, "Tournament": "FIFA World Cup", "Result": "Winners", "Tactic Name": "Tiki-Taka", "Formation": "4-2-3-1", "Core Principles": "Short passing, positional rotations, high possession control", "Key Roles": "Busquets (pivot), Xavi (tempo), Iniesta (creativity), Villa (wide forward)", "Weaknesses": "Struggled against deep low blocks, low shot conversion", "Video Link": "https://www.youtube.com/watch?v=J4YQjvGe0Xk"}, {"Team": "Germany", "Coach": "Joachim L\u00f6w", "Year": 2014, "Tournament": "FIFA World Cup", "Result": "Winners", "Tactic Name": "Hybrid Press + False 9", "Formation": "4-3-3 / 4-2-3-1", "Core Principles": "High press, positional interchange, overlapping fullbacks", "Key Roles": "Kroos (deep playmaker), M\u00fcller (space exploiter), Lahm (inverted fullback)", "Weaknesses": "High defensive line vulnerable to pace", "Video Link": "https://www.youtube.com/watch?v=bbzM2aP0ZpU"}, {"Team": "Liverpool", "Coach": "J\u00fcrgen Klopp", "Year": 2019, "Tournament": "UEFA Champions League", "Result": "Winners", "Tactic Name": "Gegenpressing with Inverted Wingbacks", "Formation": "4-3-3", "Core Principles": "Relentless pressing, transition speed, wingback support", "Key Roles": "Henderson (box-to-box), Alexander-Arnold (inverted creator), Firmino (false 9)", "Weaknesses": "Space behind advanced fullbacks", "Video Link": "https://www.youtube.com/watch?v=0x_AJzZfKWI"}, {"Team": "France", "Coach": "Didier Deschamps", "Year": 2018, "Tournament": "FIFA World Cup", "Result": "Winners", "Tactic Name": "Low Block with Transitional Speed", "Formation": "4-3-3", "Core Principles": "Compact defense, midfield stability, pace on counters", "Key Roles": "Kant\u00e9 (ball winner), Pogba (deep playmaker), Mbapp\u00e9 (counter attacker)", "Weaknesses": "Limited creativity in possession", "Video Link": "https://www.youtube.com/watch?v=sTmQ-nSbdvw"}, {"Team": "Barcelona", "Coach": "Pep Guardiola", "Year": 2009, "Tournament": "UEFA Champions League", "Result": "Winners", "Tactic Name": "Positional Play", "Formation": "4-3-3", "Core Principles": "Strict positional zones, pressing after loss, numerical overloads", "Key Roles": "Busquets (pivot), Messi (false 9), Alves (attacking fullback)", "Weaknesses": "Can be overrun by ultra-physical teams", "Video Link": "https://www.youtube.com/watch?v=7t4C-N0E0pU"}, {"Team": "Italy", "Coach": "Marcello Lippi", "Year": 2006, "Tournament": "FIFA World Cup", "Result": "Winners", "Tactic Name": "Structured Counter-Attack", "Formation": "4-2-3-1", "Core Principles": "Tight defensive unit, rapid transitions, set-piece efficiency", "Key Roles": "Cannavaro (sweeper), Pirlo (deep playmaker), Totti (free role)", "Weaknesses": "Limited attacking build-up from open play", "Video Link": "https://www.youtube.com/watch?v=dR1eP9t1IGg"}, {"Team": "Ajax", "Coach": "Louis van Gaal", "Year": 1995, "Tournament": "UEFA Champions League", "Result": "Winners", "Tactic Name": "Total Football Hybrid", "Formation": "3-4-3", "Core Principles": "Fluid positions, high pressing, positional play with young squad", "Key Roles": "Davids (engine), Kluivert (mobile 9), Blind (sweeper)", "Weaknesses": "Reliant on high intensity, vulnerable to direct long balls", "Video Link": "https://www.youtube.com/watch?v=skEm_GZrTT0"}, {"Team": "Chelsea", "Coach": "Roberto Di Matteo", "Year": 2012, "Tournament": "UEFA Champions League", "Result": "Winners", "Tactic Name": "Park the Bus + Counterpunch", "Formation": "4-2-3-1", "Core Principles": "Low defensive block, minimal possession, clinical counterattacks", "Key Roles": "Drogba (target man), Lampard (box-to-box), Cech (shot stopper)", "Weaknesses": "Heavy defensive workload, low attacking volume", "Video Link": "https://www.youtube.com/watch?v=7Do0sX4i9Ho"}, {"Team": "Brazil", "Coach": "Luiz Felipe Scolari", "Year": 2002, "Tournament": "FIFA World Cup", "Result": "Winners", "Tactic Name": "Wingback Width + Dual Strikers", "Formation": "3-5-2", "Core Principles": "Wingback-driven width, free roles for strikers, creative freedom", "Key Roles": "Cafu (RWB), Ronaldo (striker), Ronaldinho (floating 10)", "Weaknesses": "Spaces behind wingbacks when transitioning", "Video Link": "https://www.youtube.com/watch?v=XXFsf5ZJ7n8"}, {"Team": "Argentina", "Coach": "Lionel Scaloni", "Year": 2022, "Tournament": "FIFA World Cup", "Result": "Winners", "Tactic Name": "Controlled Chaos with Messi as Free 10", "Formation": "4-3-3 (Flexible)", "Core Principles": "Adaptable formation, emotional energy, Messi-centric transitions", "Key Roles": "Messi (free 10), De Paul (press engine), \u00c1lvarez (pressing 9)", "Weaknesses": "Reliance on Messi for tempo and creativity", "Video Link": "https://www.youtube.com/watch?v=PgwlK-Cyo6I"}, {"Team": "Manchester City", "Coach": "Pep Guardiola", "Year": 2023, "Tournament": "UEFA Champions League", "Result": "Winners", "Tactic Name": "Rotational Overloads with Inverted Fullbacks", "Formation": "3-2-4-1", "Core Principles": "Position fluidity; box midfield; wide overloads; buildup through inverted fullbacks", "Key Roles": "Stones (inverted CB); Rodri (anchor); De Bruyne (hybrid 8/10); Haaland (final-third finisher)", "Weaknesses": "Susceptible to counters behind inverted fullbacks", "Video Link": "https://www.youtube.com/watch?v=CityTactics2023"}];
+
+        const resultsDiv = document.getElementById('results');
+        const searchInput = document.getElementById('search');
+
+        function renderCards(items) {
+            resultsDiv.innerHTML = '';
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.innerHTML = `
+                    <h2>${item.Team} (${item.Year})</h2>
+                    <p><strong>Coach:</strong> ${item.Coach}</p>
+                    <p><strong>Tactic:</strong> ${item['Tactic Name']}</p>
+                    <p><strong>Formation:</strong> ${item.Formation}</p>
+                    <p><strong>Core Principles:</strong> ${item['Core Principles']}</p>
+                    <p><strong>Key Roles:</strong> ${item['Key Roles']}</p>
+                    <p><strong>Weaknesses:</strong> ${item.Weaknesses}</p>
+                    <p><a href="${item['Video Link']}" target="_blank">Watch Video</a></p>
+                `;
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        function searchVault(query) {
+            const q = query.toLowerCase();
+            const filtered = data.filter(item =>
+                item.Team.toLowerCase().includes(q) ||
+                item.Coach.toLowerCase().includes(q) ||
+                item['Tactic Name'].toLowerCase().includes(q) ||
+                item.Formation.toLowerCase().includes(q)
+            );
+            renderCards(filtered);
+        }
+
+        searchInput.addEventListener('input', e => searchVault(e.target.value));
+        renderCards(data);
+    </script>
+</body>
+</html>
